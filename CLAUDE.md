@@ -1,261 +1,157 @@
-# AGENT.md
+# CLAUDE.md
 
-## Project Overview
+## 1. Project Overview
 
-本プロジェクトはスタメンのTUNAGを参考にしたポートフォリオアプリである。
+本プロジェクトは、メンバーのリアルタイムな状態（ステータス）を可視化するポートフォリオアプリ（MVP1）である。
 
-飲食店などのノンデスクワーカー環境において発生する
+チーム内において、「休憩中の人に不要な連絡（電話など）をしてしまい、お互いの作業が中断する」という課題を解決することを最優先とする。
 
-- 誰に声をかけるべきかわからない
-- 休憩中に不要な連絡が発生する
-- 誰が休憩を取得できているかわからない
-
-といった課題を解決することを目的とする。
-
-単なる状態管理ツールではなく、
-
-「業務DX」
-「情報共有促進」
-「従業員体験向上」
-
-を実現するプロダクトとして設計する。
+単なる状態管理ではなく、**「コミュニケーションコストの削減」**と、それによる **「本来の業務に集中できる時間の最大化」** を実現するプロダクトとして設計する。
 
 ---
 
-## Core Concept
+## 2. Core Concept
 
-### 業務DX
+### コミュニケーションコストの削減
 
-- スタッフ状態の可視化
-- 情報共有の効率化
-- 不要な電話や声掛けの削減
+- 誰が休憩中かをひと目で把握できるようにし、不要な声掛けや電話を未然に防ぐ。
 
-### エンゲージメント向上
+### 生産性の向上
 
-- 休憩取得状況の可視化
-- 休憩不足の早期発見
-- 働きやすい環境づくり
+- 作業中断を減らすことで、業務に集中できる時間を増やす。
 
 ---
 
-## Tech Stack
+## 3. Tech Stack
 
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- React Hook Form
-- Zod
+- **Framework:** Next.js App Router
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
 
 ---
 
-## Architecture
+## 4. Architecture
 
-Feature-Sliced Design を採用する。
+`app` と `features` のみで構成するシンプルなフォルダ構造を採用する。
 
-```
+```text
 src
 ├── app
-├── pages
-├── widgets
-├── features
-├── entities
-├── shared
+└── features
 ```
 
-### layers
+### app
 
-#### app
+- 画面表示・アプリケーション初期化を担当する。
+- `app/page.tsx` で画面を表示し、状態（`useState`）を保持・管理する。
 
-アプリケーション初期化
+### features
 
-#### pages
+- ユーザーに関する機能とアクションをカプセル化する。
 
-ページ構築
-
-#### widgets
-
-複数featureを組み合わせるUI
-
-#### features
-
-ユーザーアクション
-
-#### entities
-
-ドメインモデル
-
-#### shared
-
-共通UI・ユーティリティ
-
----
-
-## Feature Structure
-
-```
+```text
 features
-├── status-management
-├── break-management
-├── employee-filter
-├── employee-search
+└── user
+    ├── actions
+    │   └── action.ts
+    └── mock
+        └── mock.ts
 ```
+
+#### actions/action.ts
+
+- ユーザーカードクリック時の状態更新ロジックを実装する。
+
+#### mock/mock.ts
+
+- デモユーザーの初期データを管理する。
 
 ---
 
-## Entity Structure
+## 5. Main Screens
 
-```
-entities
-├── employee
-├── status
-├── break-record
-```
+### Dashboard (`app/page.tsx`)
 
----
+スタッフ一覧画面（メイン画面）
 
-## Main Screens
-
-### Dashboard
-
-スタッフ一覧画面
-
-表示項目
+#### 表示項目
 
 - 名前
-- 状態
-- 本日の休憩回数
-- 本日の休憩時間
+- 状態（ステータス）
 - 最終更新時間
 
----
+#### インタラクション
 
-### Employee Detail
-
-スタッフ詳細画面
-
-表示項目
-
-- 基本情報
-- 状態履歴
-- 休憩履歴
+- ユーザーカードをクリックすることで、そのスタッフのステータスを更新できる。
 
 ---
 
-## Status Types
+## 6. Status Types
 
-飲食店向け状態を採用する。
+汎用的な4つの状態を採用する。
 
 ```ts
-type EmployeeStatus =
-  | 'preparing'
-  | 'serving'
-  | 'break'
-  | 'cleaning'
-  | 'available'
-  | 'off-duty';
+export type EmployeeStatus = 'available' | 'break' | 'holiday' | 'off-duty';
 ```
 
-表示文言
+### 表示文言
 
-- 仕込み中
-- 接客中
-- 休憩中
-- 清掃中
-- 対応可能
-- 退勤
-
----
-
-## Design Principles
-
-### 課題解決ファースト
-
-状態管理ではなく
-
-「今声をかけていい人が分からない」
-
-という課題解決を重視する。
+| Status    | Label  |
+| --------- | ------ |
+| available | 出勤   |
+| break     | 休憩中 |
+| holiday   | 休み   |
+| off-duty  | 退勤   |
 
 ---
 
-### 人を管理しない
+## 7. Frontend Constraints
 
-監視ツールとして実装しない。
-
-休憩取得状況の可視化によって
-
-従業員への配慮を促進する。
+- バックエンド実装・API実装は禁止。
+- データ更新はフロントエンドのローカル状態（`useState` など）のみで行う。
+- データは `features/user/mock/mock.ts` のモックデータを使用する。
 
 ---
 
-### TUNAGらしさ
+## 8. React Rules
 
-業務DXとエンゲージメント向上の両立を意識する。
-
----
-
-## Frontend Constraints
-
-バックエンド実装は禁止。
-
-API実装は禁止。
-
-モックデータのみ使用する。
-
-データは
-
-```
-shared/mocks
-```
-
-に配置する。
+- `useEffect` の使用は禁止。
+- モックデータを初期値とした `useState` のみで状態管理を完結させる。
 
 ---
 
-## React Rules
+## 9. コミュニケーション規約
 
-### useEffect禁止
-
-useEffectを使用しない。
-
-データ取得は不要。
-
-モックデータを直接利用する。
-
-状態管理は
-
-- useState
-- useMemo
-- useReducer
-
-のみ使用する。
+- 日本語で応答する（コード・変数名は英語とする）。
+- 簡潔に回答し、自明な説明は省略する。
+- 複雑なタスクでは実装前に計画を提示し、承認後に着手する。
 
 ---
 
-## UI Rules
+## 10. コードスタイル規約
 
-- レスポンシブ対応
-- モバイルファースト
-- シンプルで業務利用を想定
-- 情報の視認性を優先
-
----
-
-## Code Rules
-
-- any禁止
-- 型定義を最優先
-- Props型は明示
-- Server Components優先
-- Client Componentは必要最小限
+- 関数型アプローチを優先し、副作用を最小化する。
+- 厳密な型付けを行う（`any` は使用せず `unknown` を使用する）。
+- エラーは握りつぶさず、意味のあるメッセージ付きで処理する。
+- コンポーネントや関数は `export const` を使用し、アロー関数で記述する。
+- Props 型は明示する。
 
 ---
 
-## Goal
+## 11. Git規約
 
-本アプリは
+- 確認なしに自動コミット・自動 Push を行わない。
 
-「ノンデスクワーカーのコミュニケーション効率化と休憩取得状況の可視化を通じて、業務DXと従業員体験向上を実現する」
+---
 
-ことを目的とする。
+## 12. 禁止事項
+
+- README やドキュメントを勝手に生成・変更しない。
+- テストコードを確認なしに削除・コメントアウトしない。
+- 既存の動作するコードを理由なくリファクタリングしない。
+
+---
+
+## 13. Goal
+
+本アプリは、「誰が休憩中か」を極めてシンプルに可視化することで、チーム内の不要な作業中断を減らし、業務効率化とストレスのないコミュニケーションを実現することを目的とする。
