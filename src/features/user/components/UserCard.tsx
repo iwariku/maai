@@ -1,36 +1,9 @@
-import type { EmployeeStatus, User } from '@/features/user/mock/mock';
+import { STATUS_DISPLAY_MAP } from '@/features/user/constants/statusDisplay';
+import type { User } from '@/features/user/mock/mock';
 
 type UserCardProps = {
   user: User;
-};
-
-type StatusDisplay = {
-  label: string;
-  cardStyle: string;
-  badgeStyle: string;
-};
-
-const STATUS_DISPLAY: Record<EmployeeStatus, StatusDisplay> = {
-  available: {
-    label: '出勤',
-    cardStyle: 'bg-green-200',
-    badgeStyle: 'bg-green-600 text-white',
-  },
-  break: {
-    label: '休憩中',
-    cardStyle: 'bg-orange-200',
-    badgeStyle: 'bg-orange-500 text-white',
-  },
-  holiday: {
-    label: '休み',
-    cardStyle: 'bg-blue-200',
-    badgeStyle: 'bg-blue-600 text-white',
-  },
-  'off-duty': {
-    label: '退勤',
-    cardStyle: 'bg-purple-200',
-    badgeStyle: 'bg-purple-600 text-white',
-  },
+  onClick: () => void;
 };
 
 const formatUpdatedAt = (date: Date): string =>
@@ -42,11 +15,15 @@ const formatUpdatedAt = (date: Date): string =>
     minute: '2-digit',
   });
 
-export const UserCard = ({ user }: UserCardProps) => {
-  const display = STATUS_DISPLAY[user.status];
+export const UserCard = ({ user, onClick }: UserCardProps) => {
+  const display = STATUS_DISPLAY_MAP[user.status];
 
   return (
-    <div className={`rounded-lg p-4 shadow-sm ${display.cardStyle}`}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-full rounded-lg p-4 text-left shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${display.cardStyle}`}
+    >
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-base font-semibold text-gray-900">{user.name}</h3>
         <span
@@ -58,6 +35,6 @@ export const UserCard = ({ user }: UserCardProps) => {
       <p className="mt-2 text-xs text-gray-700">
         最終更新: {formatUpdatedAt(user.updatedAt)}
       </p>
-    </div>
+    </button>
   );
 };
