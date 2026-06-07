@@ -30,13 +30,6 @@ export const STATUS_DISPLAY_MAP: Record<EmployeeStatus, StatusDisplay> = {
     badgeStyle: 'bg-blue-600 text-white',
     ringStyle: 'ring-blue-600',
   },
-  'off-duty': {
-    value: 'off-duty',
-    label: '退勤',
-    cardStyle: 'bg-purple-200',
-    badgeStyle: 'bg-purple-600 text-white',
-    ringStyle: 'ring-purple-600',
-  },
 };
 
 export const STATUS_DISPLAYS: StatusDisplay[] = Object.values(STATUS_DISPLAY_MAP);

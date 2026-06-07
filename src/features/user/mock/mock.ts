@@ -22,7 +22,7 @@ export const mockUsers: User[] = [
   {
     id: 'u-004',
     name: '高橋 美咲',
-    status: 'off-duty',
+    status: 'holiday',
     updatedAt: new Date('2026-06-04T19:00:00+09:00'),
   },
   {

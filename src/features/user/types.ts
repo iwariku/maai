@@ -1,4 +1,4 @@
-export type EmployeeStatus = 'available' | 'break' | 'holiday' | 'off-duty';
+export type EmployeeStatus = 'available' | 'break' | 'holiday';
 
 export type User = {
   id: string;
