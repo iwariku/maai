@@ -1,14 +1,14 @@
-import type { EmployeeStatus } from '@/features/user/types';
+import type { UserStatus } from '@/features/user/types';
 
 export type StatusDisplay = {
-  value: EmployeeStatus;
+  value: UserStatus;
   label: string;
   cardStyle: string;
   badgeStyle: string;
   ringStyle: string;
 };
 
-export const STATUS_DISPLAY_MAP: Record<EmployeeStatus, StatusDisplay> = {
+export const STATUS_DISPLAY_MAP: Record<UserStatus, StatusDisplay> = {
   available: {
     value: 'available',
     label: '出勤',

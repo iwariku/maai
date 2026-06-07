@@ -1,8 +1,8 @@
-export type EmployeeStatus = 'available' | 'break' | 'holiday';
+export type UserStatus = 'available' | 'break' | 'holiday';
 
 export type User = {
   id: string;
   name: string;
-  status: EmployeeStatus;
+  status: UserStatus;
   updatedAt: Date;
 };

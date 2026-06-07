@@ -5,7 +5,7 @@ import { updateUserStatus } from '@/features/user/actions/action';
 import { StatusEditModal } from '@/features/user/components/StatusEditModal';
 import { UserCard } from '@/features/user/components/UserCard';
 import { mockUsers } from '@/features/user/mock/mock';
-import type { EmployeeStatus } from '@/features/user/types';
+import type { UserStatus } from '@/features/user/types';
 
 export default function Home() {
   const [users, setUsers] = useState(mockUsers);
@@ -13,7 +13,7 @@ export default function Home() {
 
   const targetUser = users.find((user) => user.id === targetUserId) ?? null;
 
-  const handleConfirm = (nextStatus: EmployeeStatus) => {
+  const handleConfirm = (nextStatus: UserStatus) => {
     if (!targetUserId) return;
     setUsers((prev) => updateUserStatus(prev, targetUserId, nextStatus));
     setTargetUserId(null);

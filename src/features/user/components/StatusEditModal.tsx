@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { STATUS_DISPLAYS } from '@/features/user/constants/statusDisplay';
-import type { EmployeeStatus, User } from '@/features/user/types';
+import type { UserStatus, User } from '@/features/user/types';
 
 type StatusEditModalProps = {
   user: User;
-  onConfirm: (nextStatus: EmployeeStatus) => void;
+  onConfirm: (nextStatus: UserStatus) => void;
   onClose: () => void;
 };
 
@@ -15,7 +15,7 @@ export const StatusEditModal = ({
   onConfirm,
   onClose,
 }: StatusEditModalProps) => {
-  const [selectedStatus, setSelectedStatus] = useState<EmployeeStatus>(
+  const [selectedStatus, setSelectedStatus] = useState<UserStatus>(
     user.status,
   );
   const isChanged = selectedStatus !== user.status;

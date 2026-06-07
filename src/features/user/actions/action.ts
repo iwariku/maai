@@ -1,4 +1,4 @@
-import type { EmployeeStatus, User } from '@/features/user/types';
+import type { UserStatus, User } from '@/features/user/types';
 
 /**
  * 指定したユーザーの status と updatedAt を更新した新しい配列を返す。
@@ -7,7 +7,7 @@ import type { EmployeeStatus, User } from '@/features/user/types';
 export const updateUserStatus = (
   users: User[],
   userId: string,
-  nextStatus: EmployeeStatus,
+  nextStatus: UserStatus,
 ): User[] =>
   users.map((user) =>
     user.id === userId
