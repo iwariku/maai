@@ -1,5 +1,5 @@
 import { STATUS_DISPLAY_MAP } from '@/features/user/constants/statusDisplay';
-import type { User } from '@/features/user/mock/mock';
+import type { User } from '@/features/user/types';
 
 type UserCardProps = {
   user: User;

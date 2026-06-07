@@ -1,4 +1,4 @@
-import type { EmployeeStatus, User } from '@/features/user/mock/mock';
+import type { EmployeeStatus, User } from '@/features/user/types';
 
 /**
  * 指定したユーザーの status と updatedAt を更新した新しい配列を返す。

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { STATUS_DISPLAYS } from '@/features/user/constants/statusDisplay';
-import type { EmployeeStatus, User } from '@/features/user/mock/mock';
+import type { EmployeeStatus, User } from '@/features/user/types';
 
 type StatusEditModalProps = {
   user: User;
