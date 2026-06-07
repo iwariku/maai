@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { updateUserStatus } from '@/features/user/actions/action';
+import { updateUserStatus } from '@/features/user/actions/updateUserStatus';
 import { StatusEditModal } from '@/features/user/components/StatusEditModal';
 import { UserCard } from '@/features/user/components/UserCard';
 import { mockUsers } from '@/features/user/mock/mock';
