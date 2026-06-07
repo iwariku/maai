@@ -40,34 +40,25 @@ export const StatusEditModal = ({
         <h2 className="pr-8 text-lg font-bold text-gray-900">
           {user.name} のステータスを変更
         </h2>
-        <fieldset className="mt-4 space-y-2">
+        <div className="mt-4 space-y-2">
           {STATUS_DISPLAYS.map((option) => {
-            const isSelected = selectedStatus === option.value;
+            const isActive = selectedStatus === option.value;
             return (
-              <label
+              <button
                 key={option.value}
-                className={`flex cursor-pointer items-center gap-3 rounded-md px-3 py-3 transition ${option.cardStyle} ${
-                  isSelected
-                    ? `ring-2 ${option.ringStyle}`
-                    : 'opacity-60 hover:opacity-100'
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setSelectedStatus(option.value)}
+                className={`w-full rounded-md px-4 py-4 text-center text-lg font-bold text-gray-900 transition ${option.cardStyle} ${
+                  isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'
                 }`}
               >
-                <input
-                  type="radio"
-                  name="status"
-                  value={option.value}
-                  checked={isSelected}
-                  onChange={() => setSelectedStatus(option.value)}
-                  className="h-4 w-4"
-                />
-                <span className="text-base font-semibold text-gray-900">
-                  {option.label}
-                </span>
-              </label>
+                {option.label}
+              </button>
             );
           })}
-        </fieldset>
-        <div className="mt-6 flex justify-end">
+        </div>
+        <div className="mt-6 flex justify-center">
           <button
             type="button"
             disabled={!isChanged}

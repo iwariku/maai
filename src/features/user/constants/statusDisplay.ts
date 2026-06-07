@@ -12,9 +12,9 @@ export const STATUS_DISPLAY_MAP: Record<EmployeeStatus, StatusDisplay> = {
   available: {
     value: 'available',
     label: '出勤',
-    cardStyle: 'bg-green-200',
+    cardStyle: 'bg-green-100',
     badgeStyle: 'bg-green-600 text-white',
-    ringStyle: 'ring-green-600',
+    ringStyle: 'ring-green-500',
   },
   break: {
     value: 'break',
