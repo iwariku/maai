@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { STATUS_DISPLAYS } from '@/features/user/constants/statusDisplay';
+import { SelectStatusButton } from '@/features/user/components/SelectStatusButton';
+import { STATUS_ENTRIES } from '@/features/user/constants/statusDisplay';
 import type { UserStatus, User } from '@/features/user/types';
 
 type StatusEditModalProps = {
@@ -41,22 +42,14 @@ export const StatusEditModal = ({
           {user.name} のステータスを変更
         </h2>
         <div className="mt-4 space-y-2">
-          {STATUS_DISPLAYS.map((option) => {
-            const isActive = selectedStatus === option.value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setSelectedStatus(option.value)}
-                className={`w-full rounded-md px-4 py-4 text-center text-lg font-bold text-gray-900 transition ${option.cardStyle} ${
-                  isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-                }`}
-              >
-                {option.label}
-              </button>
-            );
-          })}
+          {STATUS_ENTRIES.map(([status, display]) => (
+            <SelectStatusButton
+              key={status}
+              display={display}
+              isActive={selectedStatus === status}
+              onSelect={() => setSelectedStatus(status)}
+            />
+          ))}
         </div>
         <div className="mt-6 flex justify-center">
           <button
