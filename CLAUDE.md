@@ -47,24 +47,47 @@ src
 
 ### features
 
-- ユーザーに関する機能とアクションをカプセル化する。
+- ユーザーに関する機能・アクション・表示用情報をカプセル化する。
 
 ```text
 features
 └── user
+    ├── types.ts
+    ├── mock
+    │   └── mock.ts
     ├── actions
-    │   └── action.ts
-    └── mock
-        └── mock.ts
+    │   └── updateUserStatus.ts
+    ├── constants
+    │   └── statusDisplay.ts
+    └── components
+        ├── UserCard.tsx
+        ├── StatusEditModal.tsx
+        └── SelectStatusButton.tsx
 ```
 
-#### actions/action.ts
+#### types.ts
 
-- ユーザーカードクリック時の状態更新ロジックを実装する。
+- ドメイン型（`User` / `UserStatus`）を定義する。データソース中立に配置し、コンポーネントが「mock」パスに依存しない構造とする。
 
 #### mock/mock.ts
 
-- デモユーザーの初期データを管理する。
+- デモユーザーの初期データを管理する。`types.ts` から型を import する。
+
+#### actions/updateUserStatus.ts
+
+- ユーザーのステータス更新ロジックを純粋関数として実装する。
+- 将来サーバーアクションへの置換を想定したシグネチャとする。
+
+#### constants/statusDisplay.ts
+
+- ステータス毎の表示情報（ラベル・カード色・バッジ色）を集約する。
+- `Record<UserStatus, StatusDisplay>` 型で全ステータスの網羅性を型レベルで保証する。
+
+#### components/
+
+- `UserCard.tsx`: スタッフ情報を表示するカード（クリックでステータス変更モーダルを開く）
+- `StatusEditModal.tsx`: ステータス変更モーダル（仮選択 → 更新ボタンで確定）
+- `SelectStatusButton.tsx`: モーダル内のステータス選択ボタン
 
 ---
 
@@ -88,10 +111,10 @@ features
 
 ## 6. Status Types
 
-汎用的な4つの状態を採用する。
+汎用的な3つの状態を採用する。「在席（出勤中）」をデフォルトとし、ユーザーは例外状態（休憩中・休み）のみを切り替える設計とする。
 
 ```ts
-export type EmployeeStatus = 'available' | 'break' | 'holiday' | 'off-duty';
+export type UserStatus = 'available' | 'break' | 'holiday';
 ```
 
 ### 表示文言
@@ -101,7 +124,6 @@ export type EmployeeStatus = 'available' | 'break' | 'holiday' | 'off-duty';
 | available | 出勤   |
 | break     | 休憩中 |
 | holiday   | 休み   |
-| off-duty  | 退勤   |
 
 ---
 
